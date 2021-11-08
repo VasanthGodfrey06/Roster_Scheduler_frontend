@@ -67,8 +67,7 @@ const EventsCalendarPage = () => {
             // console.log(item);
             // console.log(value['Morning']);
 
-            let eventDate = date + '-' + ('0' + item).slice(5);
-            console.log(eventDate);
+            let eventDate = date + '-' + ('0' + item.slice(4)).slice(-2);
 
             let className;
             if (value['Morning'].length > 0) {
