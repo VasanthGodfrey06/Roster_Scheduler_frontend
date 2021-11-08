@@ -48,7 +48,7 @@
     "start-dev": "set PORT=3006 && env-cmd -f ./env/.env.dev react-app-rewired start ",
     "start-personal": "env-cmd -f ./env/.env.personal && set PORT=3006 && react-app-rewired start",
     "start-prod": "env-cmd -f ./env/.env.prod && set PORT=3006 && react-app-rewired start",
-    "build": "env-cmd -f ./env/.env.prod react-scripts build",
+    "build": "env-cmd -f ./env/.env.prod react-app-rewired build",
     "build-dev": "env-cmd -f ./env/.env.dev react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
