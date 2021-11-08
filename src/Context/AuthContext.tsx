@@ -12,6 +12,8 @@ export default function AuthProvieder({ children }) {
   Axios.defaults.withCredentials = true;
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_BASE_URL);
+
     Axios.get(process.env.REACT_APP_BASE_URL + '/api/login', {
       headers: { 'x-access-token': localStorage.getItem('token') }
     }).then((response) => {
