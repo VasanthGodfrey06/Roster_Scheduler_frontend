@@ -104,6 +104,7 @@ const SelectPre = () => {
     if (currentUser) {
       Preference();
     }
+    // eslint-disable-next-line
   }, [currentUser]);
   if (currentUser) {
     console.log('Currentuser');

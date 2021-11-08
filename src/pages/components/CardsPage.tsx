@@ -168,7 +168,6 @@ const CardsPage = () => {
       <Card
         style={{ width: '100%' }}
         title='Card title'
-        extra={<a href='#'>More</a>}
         tabList={tabList}
         activeTabKey={key}
         onTabChange={onTabChange(setKey)}

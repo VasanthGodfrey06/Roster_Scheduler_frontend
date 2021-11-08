@@ -6,57 +6,6 @@ import { schemeCategory10 } from 'd3-scale-chromatic';
 
 const colors = scaleOrdinal(schemeCategory10).range();
 
-const data = [
-  // {
-  //   name: 'April',
-  //   hours: 2400
-  // },
-  // {
-  //   name: 'May',
-  //   hours: 1398
-  // },
-  // {
-  //   name: 'June',
-  //   hours: 9800
-  // },
-  // {
-  //   name: 'July',
-  //   hours: 3908
-  // },
-  // {
-  //   name: 'Augest',
-  //   hours: 4800
-  // },
-  // {
-  //   name: 'Septemper',
-  //   hours: 3800
-  // },
-  // {
-  //   name: 'Septemper',
-  //   hours: 3800
-  // },
-  // {
-  //   name: 'Septemper',
-  //   hours: 3800
-  // },
-  // {
-  //   name: 'Augest',
-  //   hours: 4800
-  // },
-  // {
-  //   name: 'Septemper',
-  //   hours: 3800
-  // },
-  // {
-  //   name: 'Septemper',
-  //   hours: 3800
-  // },
-  // {
-  //   name: 'Septemper',
-  //   hours: 3800
-  // }
-];
-
 const getPath = (x, y, width, height) => `M${x},${y + height}
           C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3} ${x + width / 2}, ${y}
           C${x + width / 2},${y + height / 3} ${x + (2 * width) / 3},${y + height} ${x + width}, ${
@@ -87,6 +36,7 @@ const WithCustomShape = ({ datas }) => {
   ];
   datas.map((index) => {
     index.month = months[index.month - 1];
+    return null;
   });
   return (
     <ResponsiveContainer height={300} width={'100%'}>

@@ -24,10 +24,10 @@ type RouterProps = {
   location: Location;
 };
 
-type Props = RouterProps & MenuProps | any;
+type Props = (RouterProps & MenuProps) | any;
 
 const haveActive = (sub: IMenuItemSub[], route: string) =>
-  !!sub.find(item => item.routing === route);
+  !!sub.find((item) => item.routing === route);
 
 const Menu = ({
   data,
@@ -48,7 +48,7 @@ const Menu = ({
     const currentRoute = location.pathname.split('/')[2];
 
     const updatedMenu = data
-      ? data.map(item => {
+      ? data.map((item) => {
           if (item.sub) {
             return { ...item, active: haveActive(item.sub, currentRoute) };
           }
@@ -62,6 +62,7 @@ const Menu = ({
 
   useEffect(() => {
     onCloseSidebar && opened && onCloseSidebar();
+    // eslint-disable-next-line
   }, [location]);
 
   const handleItemClick = (itemTitle: string) => {

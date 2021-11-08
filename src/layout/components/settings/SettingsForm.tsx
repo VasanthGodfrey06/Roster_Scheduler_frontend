@@ -59,11 +59,9 @@ const SettingsForm = ({ settings, onResetSettings, onUpdateSetting }: Props) => 
       <Form.Item label='Topbar background'>
         <ColorPicker onColorChange={handleNavBgChange} color={topbarBg} />
       </Form.Item>
-
       <Form.Item label={sidebarPickerLabel}>
         <ColorPicker onColorChange={handleSideBgChange} color={sidebarBg} />
       </Form.Item>
-
       <Form.Item label='Layout'>
         <Select onChange={handleLayoutChange} defaultValue={layoutUrl}>
           <Select.Option value={'vertical'}>Vertical</Select.Option>
@@ -71,11 +69,9 @@ const SettingsForm = ({ settings, onResetSettings, onUpdateSetting }: Props) => 
           <Select.Option value={'horizontal'}>Horizontal</Select.Option>
         </Select>
       </Form.Item>
-
       <Form.Item label='Boxed'>
         <Switch onChange={handleBoxedChange} checked={boxed} />
       </Form.Item>
-
       <div className='d-flex justify-content-between buttons-list settings-actions'>
         <Button danger onClick={handleReset}>
           Reset to default
@@ -85,7 +81,7 @@ const SettingsForm = ({ settings, onResetSettings, onUpdateSetting }: Props) => 
           Download settings
         </Button>
       </div>
-      <a href='#' ref={downloadLink} style={{ display: 'none' }} />
+      {/* <a href='#' ref={downloadLink} style={{ display: 'none' }} /> */}
     </Form>
   );
 };

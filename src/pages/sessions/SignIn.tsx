@@ -4,7 +4,7 @@ import { Button, Modal, Form, Input, Switch } from 'antd';
 import { LoginOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons/lib';
 
 import PublicLayout from '../../layout/public/Public';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthContext';
 import { useForm } from 'antd/es/form/Form';
 
@@ -44,6 +44,7 @@ const SignIn = () => {
     if (localStorage.getItem('token')) {
       setIsModalVisible(true);
     }
+    // eslint-disable-next-line
   }, []);
 
   return (
