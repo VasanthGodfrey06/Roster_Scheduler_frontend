@@ -34,7 +34,7 @@ const Viewleave = () => {
 
   useEffect(() => {
     async function getViewReport() {
-      await Axios.get(process.env.REACT_APP_BASE_URL + '/api/viewreport', {
+      await Axios.get(process.env.REACT_APP_BASE_URL + '/doctor/viewreport', {
         headers: { 'x-access-token': localStorage.getItem('token') },
         params: { id: currentUser.user_id }
       })

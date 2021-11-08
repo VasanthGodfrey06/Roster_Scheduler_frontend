@@ -14,7 +14,7 @@ export default function AuthProvieder({ children }) {
   useEffect(() => {
     console.log(process.env.REACT_APP_BASE_URL);
 
-    Axios.get(process.env.REACT_APP_BASE_URL + '/api/login', {
+    Axios.get(process.env.REACT_APP_BASE_URL + '/doctor/login', {
       headers: { 'x-access-token': localStorage.getItem('token') }
     }).then((response) => {
       setCurrentUser(response.data.result[0]);
@@ -23,7 +23,7 @@ export default function AuthProvieder({ children }) {
   }, []);
 
   const login = (username, password) => {
-    Axios.post(process.env.REACT_APP_BASE_URL + '/api/login', {
+    Axios.post(process.env.REACT_APP_BASE_URL + '/doctor/login', {
       username: username,
       password: password
     }).then((response) => {
@@ -40,7 +40,7 @@ export default function AuthProvieder({ children }) {
   };
 
   const logout = () => {
-    Axios.get(process.env.REACT_APP_BASE_URL + '/api/logout', {
+    Axios.get(process.env.REACT_APP_BASE_URL + '/doctor/logout', {
       headers: { 'x-access-token': localStorage.getItem('token') }
     });
     localStorage.removeItem('token');

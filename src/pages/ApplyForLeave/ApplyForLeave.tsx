@@ -38,7 +38,7 @@ const ApplyForLeave = () => {
         '-' +
         datetime._d.getDate();
       Axios.post(
-        process.env.REACT_APP_BASE_URL + '/api/leave',
+        process.env.REACT_APP_BASE_URL + '/doctor/leave',
         {
           userid: currentUser.user_id,
           date: dateDb

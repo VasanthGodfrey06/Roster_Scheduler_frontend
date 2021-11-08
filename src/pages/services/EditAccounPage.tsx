@@ -34,7 +34,7 @@ const AccountForm = ({ props }) => {
     console.log(fname);
     console.log(lname);
     Axios.post(
-      process.env.REACT_APP_BASE_URL + '/api/edit',
+      process.env.REACT_APP_BASE_URL + '/doctor/edit',
       {
         username: username === '' ? props.currentUser.username : username,
         fname: fname === '' ? props.currentUser.first_name : fname,
@@ -109,7 +109,7 @@ const PasswordForm = ({ currentUser }) => {
   const [conpass, setConpass] = useState(null);
   const handlePass = (e) => {
     Axios.post(
-      process.env.REACT_APP_BASE_URL + '/api/password',
+      process.env.REACT_APP_BASE_URL + '/doctor/password',
       {
         curpass: curpass,
         conpass: conpass,

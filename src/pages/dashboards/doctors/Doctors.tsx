@@ -37,7 +37,7 @@ const DoctorsPage = () => {
       'mb-md-0': index === length - 2 || index === length - 3
     });
   useEffect(() => {
-    Axios.get(process.env.REACT_APP_BASE_URL + '/api/doctors', {
+    Axios.get(process.env.REACT_APP_BASE_URL + '/doctor/doctors', {
       headers: { 'x-access-token': localStorage.getItem('token') }
     })
       .then((response) => {

@@ -54,7 +54,7 @@ const SelectPre = () => {
 
     if (pretimeWithoutNull.length === new Set(pretimeWithoutNull).size) {
       Axios.post(
-        process.env.REACT_APP_BASE_URL + '/api/preslot',
+        process.env.REACT_APP_BASE_URL + '/doctor/preslot',
         {
           userid: currentUser.user_id,
           datelist: pretime
@@ -83,7 +83,7 @@ const SelectPre = () => {
     }
   };
   const getPre = () => {
-    Axios.get(process.env.REACT_APP_BASE_URL + '/api/selectedSlots', {
+    Axios.get(process.env.REACT_APP_BASE_URL + '/doctor/selectedSlots', {
       headers: { 'x-access-token': localStorage.getItem('token') },
       params: { userid: currentUser.user_id }
     })

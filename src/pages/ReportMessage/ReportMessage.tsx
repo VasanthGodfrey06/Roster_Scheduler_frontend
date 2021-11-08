@@ -43,7 +43,7 @@ const ReportMessage = () => {
       let dateDb =
         date._d.getFullYear() + '-' + (parseInt(date._d.getMonth()) + 1) + '-' + date._d.getDate();
       Axios.post(
-        process.env.REACT_APP_BASE_URL + '/api/report',
+        process.env.REACT_APP_BASE_URL + '/doctor/report',
         {
           userid: currentUser.user_id,
           msg: issue,

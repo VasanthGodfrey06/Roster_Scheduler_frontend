@@ -28,7 +28,7 @@ const DashboardPage = () => {
 
   useEffect(() => {
     async function workHours() {
-      Axios.get(process.env.REACT_APP_BASE_URL + '/api/hours', {
+      Axios.get(process.env.REACT_APP_BASE_URL + '/doctor/hours', {
         headers: { 'x-access-token': localStorage.getItem('token') },
         params: { userid: currentUser.user_id }
       })

@@ -50,7 +50,7 @@ const EventsCalendarPage = () => {
   const [desc, setDesc] = useState('');
   useEffect(() => {
     async function getRoaster() {
-      await Axios.get(process.env.REACT_APP_BASE_URL + '/api/roster', {
+      await Axios.get(process.env.REACT_APP_BASE_URL + '/doctor/roster', {
         params: {
           wardid: ward_id,
           year: date.split('-')[0],
@@ -129,7 +129,7 @@ const EventsCalendarPage = () => {
   const closeModal = () => setModalVisibility(false);
 
   const handleEventClick = (arg: any) => {
-    Axios.get(process.env.REACT_APP_BASE_URL + '/api/doctor', {
+    Axios.get(process.env.REACT_APP_BASE_URL + '/doctor/doctor', {
       params: { id: arg.event._def.title.split(' ')[2] },
       headers: { 'x-access-token': localStorage.getItem('token') }
     })
