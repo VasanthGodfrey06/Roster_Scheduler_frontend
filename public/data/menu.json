@@ -1,0 +1,49 @@
+[
+  {
+    "title": "Roster Schedular",
+    "groupTitle": true
+  },
+  {
+    "title": "Dashboard",
+    "icon": {
+      "class": "icofont-dashboard"
+    },
+    "routing": "default-dashboard"
+  },
+  {
+    "title": "View The Roster",
+    "icon": {
+      "class": "icofont-book"
+    },
+    "routing": "view-roster"
+  },
+  {
+    "title": "Select Preferences Time Slots",
+    "icon": {
+      "class": "icofont-calendar"
+    },
+    "routing": "select-preference"
+  },
+  {
+    "title": "Apply For Leave",
+    "icon": {
+      "class": "icofont-ui-message"
+    },
+    "routing": "leave-application"
+  },
+  {
+    "title": "Report Message",
+    "icon": {
+      "class": "icofont-ui-messaging"
+    },
+    "routing": "send-report"
+  },
+{
+    "title": "Doctors",
+    "icon": {
+      "class": "icofont-doctor"
+    },
+    "routing": "doctors"
+  }
+]
+  
