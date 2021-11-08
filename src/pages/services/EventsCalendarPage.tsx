@@ -62,12 +62,18 @@ const EventsCalendarPage = () => {
       })
         .then((response) => {
           let eventsRes = [];
-          JSON.parse(response.data.result[0].roster).map((item) => {
-            let eventDate = date + '-' + ('0' + item.day).slice(-2);
+          let convetedJSON = JSON.parse(response.data.result[0].roster);
+          Object.entries(convetedJSON).forEach(([item, value]) => {
+            // console.log(item);
+            // console.log(value['Morning']);
+
+            let eventDate = date + '-' + ('0' + item).slice(5);
+            console.log(eventDate);
+
             let className;
-            if (item.data.morning.length > 0) {
+            if (value['Morning'].length > 0) {
               className = ['event-blue'];
-              item.data.morning.map((id) => {
+              value['Morning'].map((id) => {
                 let anEvent = {
                   title: 'Doctor ID: ' + id,
                   start: eventDate,
@@ -79,9 +85,9 @@ const EventsCalendarPage = () => {
                 return null;
               });
             }
-            if (item.data.noon.length > 0) {
+            if (value['Evening'].length > 0) {
               className = ['event-error'];
-              item.data.noon.map((id) => {
+              value['Evening'].map((id) => {
                 let anEvent = {
                   title: 'Doctor ID: ' + id,
                   start: eventDate,
@@ -93,9 +99,9 @@ const EventsCalendarPage = () => {
                 return null;
               });
             }
-            if (item.data.night.length > 0) {
+            if (value['Night'].length > 0) {
               className = ['event-black'];
-              item.data.night.map((id) => {
+              value['Night'].map((id) => {
                 let anEvent = {
                   title: 'Doctor ID: ' + id,
                   start: eventDate,
