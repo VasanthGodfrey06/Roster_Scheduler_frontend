@@ -40,7 +40,7 @@ const Viewleave = () => {
       })
         .then((response) => {
           response.data.result.map((element) => {
-            if (element.status === 0) {
+            if (element.status.data[0] === 0) {
               element.status = 'Delivered';
             } else {
               element.status = 'Seen';
@@ -106,7 +106,6 @@ const Viewleave = () => {
       ellipsis: true
     }
   ];
-  console.log(data);
   if (currentUser) {
     if (data) {
       return (

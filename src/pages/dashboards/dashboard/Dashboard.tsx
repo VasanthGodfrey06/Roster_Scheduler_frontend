@@ -58,6 +58,8 @@ const DashboardPage = () => {
   }, [currentUser]);
 
   usePageData(pageData);
+  console.log(currentUser);
+
   if (currentUser) {
     if (datas && datas.length > 0) {
       return (

@@ -1,5 +1,5 @@
-import { Form, Button, Space, DatePicker, message, Divider, Badge, Card } from 'antd';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Form, Button, DatePicker, message, Divider, Badge, Card } from 'antd';
+import { CloseOutlined, SendOutlined } from '@ant-design/icons';
 import React, { useContext, useEffect, useState } from 'react';
 import { usePageData } from '../../hooks/usePage';
 import { IPageData } from '../../interfaces/page';
@@ -7,6 +7,7 @@ import Axios from 'axios';
 import { AuthContext } from '../../Context/AuthContext';
 import { updatePageDada } from '../../redux/page-data/actions';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 const pageData: IPageData = {
   fulFilled: true,
   title: 'Select Preferences',
@@ -22,10 +23,15 @@ const pageData: IPageData = {
 };
 
 const SelectPre = () => {
+  const { Item } = Form;
+
   usePageData(pageData);
+  const history = useHistory();
   const dispatch = useDispatch();
   const { currentUser } = useContext(AuthContext);
   const [dates, setDates] = useState(null);
+  const [datetime, setDatetime] = useState(null);
+
   function disabledDate(current) {
     const minDate = new Date(new Date().getFullYear(), new Date().getMonth() + 1);
     const maxDate = new Date(new Date().getFullYear(), new Date().getMonth() + 2);
@@ -35,29 +41,20 @@ const SelectPre = () => {
     // return current<maxDate;
   }
 
-  const onFinish = (values) => {
-    let pretime = [null, null, null, null, null];
-    let pretimeWithoutNull = [];
-    // console.log('Received values of form:', values);
-
-    values.date.map((mom, idx) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (datetime) {
       let dateDb =
-        mom.date._d.getFullYear() +
+        datetime._d.getFullYear() +
         '-' +
-        (parseInt(mom.date._d.getMonth()) + 1) +
+        (parseInt(datetime._d.getMonth()) + 1) +
         '-' +
-        mom.date._d.getDate();
-      pretime[idx] = dateDb;
-      pretimeWithoutNull.push(dateDb);
-      return null;
-    });
-
-    if (pretimeWithoutNull.length === new Set(pretimeWithoutNull).size) {
+        datetime._d.getDate();
       Axios.post(
         process.env.REACT_APP_BASE_URL + '/doctor/preslot',
         {
           userid: currentUser.user_id,
-          datelist: pretime
+          date: dateDb
         },
         {
           headers: { 'x-access-token': localStorage.getItem('token') }
@@ -78,9 +75,8 @@ const SelectPre = () => {
         .catch((err) => {
           message.error('Error occurred');
         });
-    } else {
-      message.error('Please enter different dates');
     }
+    return false;
   };
   const getPre = () => {
     Axios.get(process.env.REACT_APP_BASE_URL + '/doctor/selectedSlots', {
@@ -88,9 +84,9 @@ const SelectPre = () => {
       params: { userid: currentUser.user_id }
     })
       .then((response) => {
-        console.log(response.data.result);
+        console.log(response.data.result[0].prefered_date);
 
-        setDates(response.data.result[0]);
+        setDates(response.data.result[0].prefered_date);
         setTimeout(() => dispatch(updatePageDada({ fulFilled: true, loaded: true })), 300);
       })
       .catch((err) => {
@@ -109,8 +105,6 @@ const SelectPre = () => {
   if (currentUser) {
     console.log('Currentuser');
     if (dates) {
-      console.log(dates.date1);
-      console.log('dates');
       // dates.map((date) => console.log(date));
       return (
         <>
@@ -118,102 +112,87 @@ const SelectPre = () => {
             <Divider orientation='left'>Selected Dates</Divider>
             <div>
               <div key={dates.date1}>
-                <Badge color={'red'} text={dates.date1} />
-              </div>
-            </div>
-            <div>
-              <div key={dates.date2}>
-                <Badge color={'red'} text={dates.date2} />
-              </div>
-            </div>
-            <div>
-              <div key={dates.date3}>
-                <Badge color={'red'} text={dates.date3} />
-              </div>
-            </div>
-            <div>
-              <div key={dates.date4}>
-                <Badge color={'red'} text={dates.date4} />
-              </div>
-            </div>
-            <div>
-              <div key={dates.date5}>
-                <Badge color={'red'} text={dates.date5} />
+                <Badge color={'red'} text={dates} />
               </div>
             </div>
           </Card>
-          <Form name='dynamic_form_nest_item' onFinish={onFinish} autoComplete='off'>
-            <Form.List name='date'>
-              {(fields, { add, remove }) => (
-                <>
-                  {fields.map(({ key, name, fieldKey, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align='baseline'>
-                      <Form.Item
-                        {...restField}
-                        name={[name, 'date']}
-                        fieldKey={[fieldKey, 'date']}
-                        rules={[{ required: true, message: 'Missing date' }]}
-                      >
-                        {/* <Input placeholder="Last Name" /> */}
-                        <DatePicker allowClear format='DD/MM/yyyy' disabledDate={disabledDate} />
-                      </Form.Item>
-                      <MinusCircleOutlined onClick={() => remove(name)} />
-                    </Space>
-                  ))}
-                  <Form.Item>
-                    {fields.length < 5 ? (
-                      <Button type='default' onClick={() => add()} block icon={<PlusOutlined />}>
-                        Add field
-                      </Button>
-                    ) : null}
-                  </Form.Item>
-                </>
-              )}
-            </Form.List>
-            <Form.Item>
-              <Button type='primary' htmlType='submit'>
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
+          <div className='row'>
+            <div className='col-md-6 col-sm-12'>
+              <Form layout='vertical' onSubmitCapture={handleSubmit}>
+                <Form.Item label='Date And Time'>
+                  <Item
+                    name='Date Picker'
+                    rules={[{ required: true, message: <>Select the date</> }]}
+                  >
+                    <DatePicker
+                      format='YYYY-MM-DD'
+                      disabledDate={disabledDate}
+                      onChange={(date) => setDatetime(date)}
+                    />
+                  </Item>
+                  {/* <p>{datetime}</p> */}
+                </Form.Item>
+
+                <div className='d-flex justify-content-end'>
+                  <div className='elem-list'>
+                    <Button
+                      onClick={() => {
+                        history.push('/vertical/default-dashboard');
+                      }}
+                      ghost
+                      danger
+                      icon={<CloseOutlined />}
+                    >
+                      Cancel
+                    </Button>
+
+                    <Button type='primary' icon={<SendOutlined />} htmlType='submit'>
+                      Submit
+                    </Button>
+                  </div>
+                </div>
+              </Form>
+            </div>
+          </div>
         </>
       );
     }
     return (
-      <Form name='dynamic_form_nest_item' onFinish={onFinish} autoComplete='off'>
-        <Form.List name='date'>
-          {(fields, { add, remove }) => (
-            <>
-              {fields.map(({ key, name, fieldKey, ...restField }) => (
-                <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align='baseline'>
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'date']}
-                    fieldKey={[fieldKey, 'date']}
-                    rules={[{ required: true, message: 'Missing date' }]}
-                  >
-                    {/* <Input placeholder="Last Name" /> */}
-                    <DatePicker allowClear format='DD/MM/yyyy' disabledDate={disabledDate} />
-                  </Form.Item>
-                  <MinusCircleOutlined onClick={() => remove(name)} />
-                </Space>
-              ))}
-              <Form.Item>
-                {fields.length < 5 ? (
-                  <Button type='default' onClick={() => add()} block icon={<PlusOutlined />}>
-                    Add field
-                  </Button>
-                ) : null}
-              </Form.Item>
-            </>
-          )}
-        </Form.List>
-        <Form.Item>
-          <Button type='primary' htmlType='submit'>
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
+      <div className='row'>
+        <div className='col-md-6 col-sm-12'>
+          <Form layout='vertical' onSubmitCapture={handleSubmit}>
+            <Form.Item label='Date And Time'>
+              <Item name='Date Picker' rules={[{ required: true, message: <>Select the date</> }]}>
+                <DatePicker
+                  format='YYYY-MM-DD'
+                  disabledDate={disabledDate}
+                  onChange={(date) => setDatetime(date)}
+                />
+              </Item>
+              {/* <p>{datetime}</p> */}
+            </Form.Item>
+
+            <div className='d-flex justify-content-end'>
+              <div className='elem-list'>
+                <Button
+                  onClick={() => {
+                    history.push('/vertical/default-dashboard');
+                  }}
+                  ghost
+                  danger
+                  icon={<CloseOutlined />}
+                >
+                  Cancel
+                </Button>
+
+                <Button type='primary' icon={<SendOutlined />} htmlType='submit'>
+                  Submit
+                </Button>
+              </div>
+            </div>
+          </Form>
+        </div>
+      </div>
     );
   } else {
     return message.warning('Wait s second');
